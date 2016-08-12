@@ -84,8 +84,15 @@ module ActiveRecord
               render_bind(col, v)
             }.inspect
           end
-          name = color(name, nil, true)
-          sql  = color(sql, sql_color(sql), true)
+
+          if name =~ /cache/i
+            name = color(name, ActiveSupport::LogSubscriber::BLACK, true)
+            sql  = color(sql, ActiveSupport::LogSubscriber::BLACK, true)
+          else
+            name = color(name, nil, true)
+            sql  = color(sql, sql_color(sql), true)
+          end
+
           debug "  #{name}  #{sql}#{binds}"
         end
 
